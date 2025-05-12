@@ -56,11 +56,11 @@ auto BinaryErrorCategory::message(BinaryErrorCodeEnum error_enum) const -> std::
 
 template <>
 auto BinaryErrorCategory::equivalent(
-        BinaryErrorCodeEnum error_enum,
+        int code,
         std::error_condition const& condition
 ) const noexcept -> bool {
-    switch (error_enum) {
-        case BinaryErrorCodeEnum::Failure:
+    switch (code) {
+        case (int) BinaryErrorCodeEnum::Failure:
             return std::ranges::any_of(
                     cFailureConditions.cbegin(),
                     cFailureConditions.cend(),
