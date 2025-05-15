@@ -2,6 +2,7 @@
 #define YSTDLIB_ERROR_HANDLING_ERRORCODE_HPP
 
 #include <concepts>
+#include <iostream>
 #include <string>
 #include <system_error>
 #include <type_traits>
@@ -50,7 +51,9 @@ public:
     [[nodiscard]] auto
     equivalent(int error_num, std::error_condition const& condition) const noexcept
             -> bool override {
-        return equivalent(static_cast<ErrorCodeEnum>(error_num), condition);
+        std::cout << "\n\nhere\n====================\n" << std::endl;
+        std::cout << typeid(ErrorCodeEnum).name() << std::endl;
+        return this->equivalent_2(static_cast<ErrorCodeEnum>(error_num), condition);
     }
 
     // Methods
@@ -69,7 +72,7 @@ public:
      * @return Whether the error condition of the given error matches the given condition.
      */
     [[nodiscard]] auto
-    equivalent(ErrorCodeEnum error_enum, std::error_condition const& condition) const noexcept
+    equivalent_2(ErrorCodeEnum error_enum, std::error_condition const& condition) const noexcept
             -> bool;
 };
 
@@ -119,10 +122,12 @@ template <typename ErrorCodeEnum>
 [[nodiscard]] auto make_error_code(ErrorCode<ErrorCodeEnum> error) -> std::error_code;
 
 template <ErrorCodeEnumType ErrorCodeEnum>
-auto ErrorCategory<ErrorCodeEnum>::equivalent(
+auto ErrorCategory<ErrorCodeEnum>::equivalent_2(
         ErrorCodeEnum error_enum,
         std::error_condition const& condition
 ) const noexcept -> bool {
+    std::cout << "\n\nhere_2\n====================\n" << std::endl;
+    std::cout << typeid(ErrorCodeEnum).name() << std::endl;
     return std::error_category::default_error_condition(static_cast<int>(error_enum)) == condition;
 }
 

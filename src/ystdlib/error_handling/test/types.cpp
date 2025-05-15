@@ -55,12 +55,13 @@ auto BinaryErrorCategory::message(BinaryErrorCodeEnum error_enum) const -> std::
 }
 
 template <>
-auto BinaryErrorCategory::equivalent(
-        int code,
+auto BinaryErrorCategory::equivalent_2(
+        BinaryErrorCodeEnum error_enum,
         std::error_condition const& condition
 ) const noexcept -> bool {
-    switch (code) {
-        case (int) BinaryErrorCodeEnum::Failure:
+    std::cout << "\n\nhere_3\n====================\n" << std::endl;
+    switch (error_enum) {
+        case BinaryErrorCodeEnum::Failure:
             return std::ranges::any_of(
                     cFailureConditions.cbegin(),
                     cFailureConditions.cend(),
@@ -70,3 +71,10 @@ auto BinaryErrorCategory::equivalent(
             return false;
     }
 }
+
+// template<>
+// auto BinaryErrorCategory::equivalent(int error_num, std::error_condition const& condition) const noexcept
+//         -> bool {
+//     std::cout << "\n\nhereee\n====================\n" << std::endl;
+//     return equivalent_2(static_cast<BinaryErrorCodeEnum>(error_num), condition);
+// }
