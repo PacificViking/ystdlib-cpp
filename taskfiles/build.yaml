@@ -63,3 +63,19 @@ tasks:
         vars:
           BUILD_DIR: "{{.G_BUILD_DIR}}"
           SOURCE_DIR: "{{.ROOT_DIR}}"
+
+  examples:
+    desc: "Builds the ystdlib examples." 
+    vars:
+      EXAMPLES_BUILD_DIR: "{{.G_EXAMPLES_DIR}}/build"
+    deps:
+      - ":install:all"
+    cmds:
+      - "mkdir -p '{{.EXAMPLES_BUILD_DIR}}'"
+      - task: ":utils:cmake:generate"
+        vars:
+          BUILD_DIR: "{{.EXAMPLES_BUILD_DIR}}"
+          SOURCE_DIR: "{{.G_EXAMPLES_DIR}}"
+      - task: ":utils:cmake:build"
+        vars:
+          BUILD_DIR: "{{.EXAMPLES_BUILD_DIR}}"
